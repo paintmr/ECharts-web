@@ -135,3 +135,67 @@ body {
 .monitor .tabs a.active {
   color: #fff;
 }
+.monitor .content {
+  flex: 1;
+  position: relative;
+  display: none;
+}
+.monitor .head {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.05;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.15rem 0.45rem;
+  color: #68d8fe;
+  font-size: 0.175rem;
+}
+.monitor .marquee-view {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.monitor .row {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.05;
+  font-size: 0.15rem;
+  color: #61a8ff;
+  padding: 0.15rem 0.45rem;
+}
+.monitor .row .icon-dot {
+  position: absolute;
+  left: 0.2rem;
+  opacity: 0;
+}
+.monitor .row:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #68d8fe;
+}
+.monitor .row:hover .icon-dot {
+  opacity: 1;
+}
+.monitor .col:first-child {
+  width: 1rem;
+}
+.monitor .col:nth-child(2) {
+  width: 2.5rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.monitor .col:nth-child(3) {
+  width: 1rem;
+}
+/* 通过css3动画滚动marquee */
+.marquee-view .marquee {
+  animation: move 15s linear infinite;
+}
+@keyframes move {
+  0% {
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}

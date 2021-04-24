@@ -1,12 +1,11 @@
 (function flexible(window, document) {
   var docEl = document.documentElement
   var dpr = window.devicePixelRatio || 1
-  console.log('ha:' + window.devicePixelRatio)
+
   // adjust body font size
   function setBodyFontSize() {
     if (document.body) {
       document.body.style.fontSize = (12 * dpr) + 'px'
-      console.log(dpr);
 
     }
     else {
