@@ -92,6 +92,11 @@ body {
   /* inner的padding上下是24px，左右是36px，要转换为rem */
   padding: 0.3rem 0.45rem;
 }
+.panel h3 {
+  font-size: 0.25rem;
+  color: #fff;
+  font-weight: 400;
+}
 /* 概览区域模块制作 */
 .overview {
   height: 1.375rem; /*110px */
@@ -198,4 +203,38 @@ body {
   100% {
     transform: translateY(-50%);
   }
+}
+/* 点位分布统计模块制作 */
+.point {
+  height: 4.25rem;
+}
+.point .chart {
+  display: flex;
+  margin-top: 0.3rem;
+  justify-content: space-between;
+}
+.point .pie {
+  width: 3.9rem;
+  height: 3rem;
+  margin-left: -0.125rem;
+}
+.point .data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 2.1rem;
+  padding: 0.45rem 0.375rem;
+  box-sizing: border-box;
+  background-image: url(../images/rect.png);
+  background-size: cover;
+}
+.point h4 {
+  margin-bottom: 0.15rem;
+  font-size: 0.35rem;
+  color: #fff;
+}
+.point span {
+  display: block;
+  color: #4c9bfd;
+  font-size: 0.2rem;
 }
