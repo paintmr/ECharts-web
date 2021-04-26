@@ -24,21 +24,32 @@
     },
     series: [
       {
-        name: '面积模式',
+        name: '点位统计',
         type: 'pie',
         radius: ['10%', '70%'],
         center: ['50%', '50%'],
-        roseType: 'area',
+        roseType: 'radius',
         data: [
-          { value: 10, name: 'rose1' },
-          { value: 5, name: 'rose2' },
-          { value: 15, name: 'rose3' },
-          { value: 25, name: 'rose4' },
-          { value: 20, name: 'rose5' },
-          { value: 35, name: 'rose6' },
-          { value: 30, name: 'rose7' },
-          { value: 40, name: 'rose8' }
-        ]
+          { value: 20, name: "云南" },
+          { value: 26, name: "北京" },
+          { value: 24, name: "山东" },
+          { value: 25, name: "河北" },
+          { value: 20, name: "江苏" },
+          { value: 25, name: "浙江" },
+          { value: 30, name: "四川" },
+          { value: 42, name: "湖北" }
+        ],
+        // 修饰饼形图文字相关的样式 label对象
+        label: {
+          fontSize: 10
+        },
+        // 修饰引导线样式
+        labelLine: {
+          // 连接到图形的线长度
+          length: 6,
+          // 连接到文字的线长度
+          length2: 8
+        }
       }
     ]
   };
