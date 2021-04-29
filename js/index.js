@@ -12,6 +12,7 @@
     $(this).append(rows);
   })
 })();
+
 // 点位分布统计模块
 (function () {
   // (1) 实例化对象
@@ -22,6 +23,17 @@
       trigger: 'item',
       formatter: '{a} <br/>{b} : {c} ({d}%)'
     },
+    // 注意颜色写的位置
+    color: [
+      "#006cff",
+      "#60cda0",
+      "#ed8884",
+      "#ff9f7f",
+      "#0096ff",
+      "#9fe6b8",
+      "#32c5e9",
+      "#1d9dff"
+    ],
     series: [
       {
         name: '点位统计',
@@ -55,4 +67,97 @@
   };
   // (3) 配置项和数据给实例化对象
   myChart.setOption(option);
-})()
+  // (4) 当浏览器缩放的时候，图标等比例缩放
+  window.addEventListener("resize", function () {
+    myChart.resize();
+  })
+})();
+
+// 柱形图模块
+(
+  function () {
+    // 1. 实例化对象
+    var myChart = echarts.init(document.querySelector(".bar"));
+    // 2. 指定配置和数据
+    var option = {
+      color: new echarts.graphic.LinearGradient(
+        // (x1, y1)到点(x2, y2)之间渐变
+        0, 0, 0, 1,
+        [
+          { offset: 0, color: "#00fffb" }, //0 起始颜色
+          { offset: 1, color: "#0061ce" } //1 结束颜色
+        ]
+      ),
+      tooltip: {
+        trigger: 'item',
+      },
+      grid: {
+        left: '0%',
+        right: '3%',
+        bottom: '3%',
+        top: '3%',
+        // 图表位置紧贴画布边缘是否显示刻度以及label文字，防止坐标轴标签溢出，跟grid区域有关系。
+        containLabel: true,
+        // 是否显示直角坐标系网格
+        show: true,
+        // grid 四条边框的颜色
+        borderColor: "rgba(0, 240, 255, 0.3)"
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          axisTick: {
+            // 让x轴每一个bar的描述和bar在刻度之间
+            alignWithLabel: false,
+            // 隐藏x轴刻度
+            show: false
+          },
+          axisLabel: {
+            color: '#4c9bfd'
+          },
+          // x轴这条线的颜色
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(0,240,255,0.3)'
+            }
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          axisTick: {
+            // 隐藏y轴刻度
+            show: false
+          },
+          axisLabel: {
+            color: '#4c9bfd'
+          },
+          // y轴这条线的颜色样式
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(0,240,255,0.3)'
+            }
+          },
+          // y轴分割线的颜色样式
+          splitLine: {
+            lineStyle: {
+              color: 'rgba(0, 240, 255,0.3)'
+            }
+          }
+        }
+      ],
+      series: [
+        {
+          name: '直接访问',
+          type: 'bar',
+          barWidth: '60%',
+          data: [10, 52, 200, 334, 390, 330, 220]
+        }
+      ]
+    };
+    // 3. 把配置给实例对象
+    myChart.setOption(option);
+  }
+)();
