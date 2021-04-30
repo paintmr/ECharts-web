@@ -76,9 +76,27 @@
 // 柱形图模块
 (
   function () {
-    // 1. 实例化对象
+    var item = {
+      name: "",
+      value: 1200,
+      // 修改当前柱形的样式
+      itemStyle: {
+        color: "#254065"
+      },
+      // 鼠标放到柱子上不想高亮显示：原先是什么颜色，这里就写什么颜色。
+      emphasis: {
+        itemStyle: {
+          color: "#254065"
+        }
+      },
+      // 鼠标经过柱子不显示提示框组件
+      tooltip: {
+        extraCssText: "opacity: 0"
+      }
+    }
+    // (1) 实例化对象
     var myChart = echarts.init(document.querySelector(".bar"));
-    // 2. 指定配置和数据
+    // (2) 指定配置和数据
     var option = {
       color: new echarts.graphic.LinearGradient(
         // (x1, y1)到点(x2, y2)之间渐变
@@ -106,7 +124,21 @@
       xAxis: [
         {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: [
+            "上海",
+            "广州",
+            "北京",
+            "深圳",
+            "合肥",
+            "",
+            "......",
+            "",
+            "杭州",
+            "厦门",
+            "济南",
+            "成都",
+            "重庆"
+          ],
           axisTick: {
             // 让x轴每一个bar的描述和bar在刻度之间
             alignWithLabel: false,
@@ -153,11 +185,267 @@
           name: '直接访问',
           type: 'bar',
           barWidth: '60%',
-          data: [10, 52, 200, 334, 390, 330, 220]
+          data: [
+            2100,
+            1900,
+            1700,
+            1560,
+            1400,
+            item,
+            item,
+            item,
+            900,
+            750,
+            600,
+            480,
+            240
+          ]
         }
       ]
     };
-    // 3. 把配置给实例对象
+    // (3) 把配置给实例对象
     myChart.setOption(option);
+    // (4) 当浏览器缩放的时候，图标等比例缩放
+    window.addEventListener("resize", function () {
+      myChart.resize();
+    })
   }
 )();
+
+// 订单模块
+(function () {
+  // 点击切换tab栏
+  $('.filter').on('click', 'a', function () {
+    $(this).addClass('active').siblings().removeClass('active');
+    $('.tab-item').eq($(this).index()).addClass('order-selected').siblings().removeClass('order-selected');
+  })
+})();
+
+// 销售统计模块
+(function () {
+  var data = {
+    year: [
+      [24, 40, 101, 134, 90, 230, 210, 230, 120, 230, 210, 120],
+      [40, 64, 191, 324, 290, 330, 310, 213, 180, 200, 180, 79]
+    ],
+    quarter: [
+      [23, 75, 12, 97, 21, 67, 98, 21, 43, 64, 76, 38],
+      [43, 31, 65, 23, 78, 21, 82, 64, 43, 60, 19, 34]
+    ],
+    month: [
+      [34, 87, 32, 76, 98, 12, 32, 87, 39, 36, 29, 36],
+      [56, 43, 98, 21, 56, 87, 43, 12, 43, 54, 12, 98]
+    ],
+    week: [
+      [43, 73, 62, 54, 91, 54, 84, 43, 86, 43, 54, 53],
+      [32, 54, 34, 87, 32, 45, 62, 68, 93, 54, 54, 24]
+    ]
+  };
+  // (1) 实例化对象
+  var myChart = echarts.init(document.querySelector('.line'));
+  // (2) 指定配置和数据
+  var option = {
+    color: ['#00f2f1', '#ed3f35'], // 修改线的颜色
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      // 距离容器10%
+      right: '10%',
+      // 修饰图例文字的颜色
+      textStyle: {
+        color: '#4c9bfd'
+      },
+      // 如果series里面设置了name，此时图例组件的data可以省略
+      // data: ['预期销售额', '实际销售额']
+    },
+    grid: {
+      top: '20%',
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      show: true,
+      borderColor: '#012f4a',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      data: [
+        "1月",
+        "2月",
+        "3月",
+        "4月",
+        "5月",
+        "6月",
+        "7月",
+        "8月",
+        "9月",
+        "10月",
+        "11月",
+        "12月"
+      ],
+      axisTick: {
+        show: false  // 去除刻度线
+      },
+      axisLabel: {
+        color: '#4c9bfd'  // 修饰刻度标签的文本颜色
+      },
+      axisLine: {
+        show: false //去除x坐标轴的颜色(依靠y轴的分割线来显示不同的数据)
+      },
+      boundaryGap: false, // 数据线紧贴坐标轴，不要距离
+    },
+    yAxis: {
+      type: 'value',
+      axisTick: {
+        show: false  // 去除刻度线
+      },
+      axisLabel: {
+        color: '#4c9bfd'  // 修饰刻度标签的文本颜色
+      },
+      splitLine: {
+        lineStyle: { // 修改y轴分割线的颜色
+          color: '#012f4a'
+        }
+      }
+    },
+    series: [
+      {
+        name: '预期销售额',
+        type: 'line',
+        stack: '总量',
+        smooth: true, // 让线变得圆滑，而非折线
+        data: data.year[0]
+      },
+      {
+        name: '实际销售额',
+        type: 'line',
+        stack: '总量',
+        smooth: true, // 让线变得圆滑，而非折线
+        data: data.year[1]
+      }
+    ]
+  };
+  // (3) 把配置和数据给实例对象
+  myChart.setOption(option);
+  // (4) 当浏览器缩放的时候，图标等比例缩放
+  window.addEventListener("resize", function () {
+    myChart.resize();
+  })
+  // (5) 点击tab切换tab栏和折线图
+  $('.caption').on('click', 'a', function () {
+    $(this).addClass('active').siblings('a').removeClass('active');
+    var i = $(this).index() - 1;
+    index = i; //把i赋值给index，这样鼠标离开sales时，自动切换到被点击的下一个tab
+    // var timeArr = ['year', 'quarter', 'month', 'week']
+    // var key = timeArr[i];
+    // 上面两行代码也可以下面这样写，因为element.dataset中存放了所有以data開頭的自定義屬性
+    var key = this.dataset.type
+    option.series[0].data = data[key][0];
+    option.series[1].data = data[key][1];
+    // 把配置和数据给实例对象
+    myChart.setOption(option);
+  })
+  // (6) 自动切换tab栏和折线图
+  // 每隔1s，让a触发点击事件
+  var as = $('.sales .caption a')
+  var index = 0;
+  var timer = setInterval(function () {
+    index++;
+    if (index >= 4) {
+      index = 0;
+    }
+    as.eq(index).click()
+  }, 1000);
+  // (7) 鼠标经过sales，关闭定时器；鼠标离开sales，开启定时器。
+  $('.sales').hover(
+    function () {
+      clearInterval(timer);
+    },
+    function () {
+      clearInterval(timer);
+      timer = setInterval(function () {
+        index++;
+        if (index >= 4) {
+          index = 0;
+        }
+        as.eq(index).click()
+      }, 1000);
+    }
+  )
+})();
+
+// 销售渠道模块，雷达图
+(function () {
+  // (1) 实例化对象
+  var myChart = echarts.init(document.querySelector('.radar'));
+  // (2) 指定配置
+  var dataBJ = [
+    [55, 9, 56, 0.46, 18, 6, 1],
+
+  ];
+  var lineStyle = {
+    normal: {
+      width: 1,
+      opacity: 0.5
+    }
+  };
+  var option = {
+    radar: {
+      indicator: [
+        { name: 'AQI', max: 300 },
+        { name: 'PM2.5', max: 250 },
+        { name: 'PM10', max: 300 },
+        { name: 'CO', max: 5 },
+        { name: 'NO2', max: 200 },
+        { name: 'SO2', max: 100 }
+      ],
+      // 修改雷达图的大小
+      radisu: '65%',
+      shape: 'circle',
+      // 分割的圆圈个数
+      splitNumber: 4,
+      name: {
+        textStyle: {
+          color: 'rgb(238, 197, 102)'
+        }
+      },
+      // 分割圆圈线条的样式
+      splitLine: {
+        lineStyle: {
+          color: 'rgba(255,255,255,0.5)'
+        }
+      },
+      splitArea: {
+        show: false
+      },
+      axisLine: {
+        lineStyle: {
+          color: 'rgba(238, 197, 102, 0.5)'
+        }
+      }
+    },
+    series: [
+      {
+        name: '北京',
+        type: 'radar',
+        lineStyle: lineStyle,
+        data: dataBJ,
+        symbol: 'none',
+        itemStyle: {
+          color: '#F9713C'
+        },
+        areaStyle: {
+          opacity: 0.1
+        }
+      },
+
+    ]
+  };
+  // (3) 把配置和数据给对象
+  myChart.setOption(option);
+  // (4) 当浏览器缩放的时候，图标等比例缩放
+  window.addEventListener("resize", function () {
+    myChart.resize();
+  })
+})();
