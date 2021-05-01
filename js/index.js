@@ -380,34 +380,29 @@
   // (1) 实例化对象
   var myChart = echarts.init(document.querySelector('.radar'));
   // (2) 指定配置
-  var dataBJ = [
-    [55, 9, 56, 0.46, 18, 6, 1],
-
-  ];
-  var lineStyle = {
-    normal: {
-      width: 1,
-      opacity: 0.5
-    }
-  };
   var option = {
+    tooltip: {
+      show: true,
+      // 控制提示框组件的位置
+      position: ['60%', '10%']
+    },
     radar: {
       indicator: [
-        { name: 'AQI', max: 300 },
-        { name: 'PM2.5', max: 250 },
-        { name: 'PM10', max: 300 },
-        { name: 'CO', max: 5 },
-        { name: 'NO2', max: 200 },
-        { name: 'SO2', max: 100 }
+        { name: "机场", max: 100 },
+        { name: "商场", max: 100 },
+        { name: "火车站", max: 100 },
+        { name: "汽车站", max: 100 },
+        { name: "地铁", max: 100 }
       ],
       // 修改雷达图的大小
-      radisu: '65%',
+      radius: '65%',
       shape: 'circle',
       // 分割的圆圈个数
       splitNumber: 4,
       name: {
+        // 修饰雷达图文字的颜色
         textStyle: {
-          color: 'rgb(238, 197, 102)'
+          color: '#4c9bfd'
         }
       },
       // 分割圆圈线条的样式
@@ -419,9 +414,10 @@
       splitArea: {
         show: false
       },
+      // 坐标轴的线改为白色半透明
       axisLine: {
         lineStyle: {
-          color: 'rgba(238, 197, 102, 0.5)'
+          color: 'rgba(255, 255, 255, 0.5)'
         }
       }
     },
@@ -429,14 +425,30 @@
       {
         name: '北京',
         type: 'radar',
-        lineStyle: lineStyle,
-        data: dataBJ,
-        symbol: 'none',
+        // 数据网的边缘线的设定
+        lineStyle: {
+          color: '#fff',
+          width: 1,
+          opacity: 0.5
+        },
+        data: [[90, 19, 56, 11, 34]],
+        // 设置拐点形状
+        symbol: 'circle',
+        // 设置拐点大小
+        symbolSize: 5,
+        // 设置拐点颜色
         itemStyle: {
-          color: '#F9713C'
+          color: '#fff'
+        },
+        // 让小圆点显示数据
+        label: {
+          show: true,
+          fontSize: 10,
+          color: '#fff'
         },
         areaStyle: {
-          opacity: 0.1
+          // 修饰数据组成的网的背景颜色
+          color: 'rgba(238, 197, 102, 0.6)'
         }
       },
 
