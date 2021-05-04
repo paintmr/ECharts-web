@@ -99,7 +99,7 @@
     // (2) 指定配置和数据
     var option = {
       color: new echarts.graphic.LinearGradient(
-        // (x1, y1)到点(x2, y2)之间渐变
+        // (x1, y2)到点(x2, y2)之间渐变
         0, 0, 0, 1,
         [
           { offset: 0, color: "#00fffb" }, //0 起始颜色
@@ -461,3 +461,60 @@
     myChart.resize();
   })
 })();
+
+// 一季度销售进度，半环形图
+// (1) 实例化对象
+var myChart = echarts.init(document.querySelector('.sales-process'));
+// (2) 指定配置
+var option = {
+  series: [
+    {
+      name: '销售进度',
+      type: 'pie',
+      radius: ['130%', '150%'],
+      // 移动位置，让"50%"这几个字恰好在半环形的里面
+      center: ['48%', '80%'],
+      labelLine: {
+        show: false
+      },
+      // 把饼形图的起始角度（不是旋转角度）设置为180°
+      startAngle: 180,
+      // 鼠标经过不需要放大偏移图形
+      hoverOffset: 0,
+      data: [
+        {
+          value: 100,
+          itemStyle: {
+            // 颜色渐变#00c9e0->#005fc1
+            color: new echarts.graphic.LinearGradient(
+              // (x1,y2)点到点(x2,y2)之间进行渐变
+              0, 0, 0, 1,
+              [
+                { offset: 0, color: '#00c9e0' },//0起始颜色
+                { offset: 1, color: '#005fc1' }//1结束颜色
+              ]
+            )
+          }
+        },
+        {
+          value: 100,
+          itemStyle: {
+            color: '#12274d'
+          }
+        },
+        {
+          value: 200,
+          itemStyle: {
+            color: 'transparent'
+          }
+        }
+      ]
+    }
+  ]
+};
+// (3) 把配置和数据给对象
+myChart.setOption(option);
+// (4) 当浏览器缩放的时候，图标等比例缩放
+window.addEventListener("resize", function () {
+  myChart.resize();
+});
